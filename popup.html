@@ -11,17 +11,13 @@
 </head>
 
 <body>
-    <header class="bar">
+    <header class="navbar">
         <h1>Flash Card Clipper</h1>
         <nav>
             <button id="btn-open-options" title="settings">settings</button>
         </nav>
     </header>
-    <section> 
-        <h2>Save/Bookmark Page Button</h2>
-    </section>
-
-
+  
     <section class="quick_add"> 
         <h2>Quick Add</h2>
         <textarea id="qa_front" placeholder="front (question / prompt)"></textarea>
@@ -56,10 +52,16 @@
                 </div>
             </li>
         </template>
+    </section>
     
-    <section>Notes
-        <h2>Write Your Notes</h2>
-        <ul id="notesContainer"></ul>
+    <section>
+        <h2>Helpful Notes</h2>
+        <section id="note-written">
+            <textarea id="noteText" placeholder="Type your notes here..." rows="3"></textarea>
+            <button id="saveNoteBtn">Save Note</button>
+            <button id="savePageBtn"> Save This Page!</button>
+            
+            <ul id="notesContainer"></ul>
     </section>
 
     <script src="./popup_script.js"></script>
