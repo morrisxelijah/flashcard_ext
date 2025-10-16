@@ -28,16 +28,16 @@ saveNoteBtn.addEventListener("click", async() => {
         date: new Date().toLocaleString()
     };
 
-//to get notes
-const data = await chrome.storage.local.get("notes");
-const notes = data.notes || [];
-notes.push(note);
+    //to get notes
+    const data = await chrome.storage.local.get("notes");
+    const notes = data.notes || [];
+    notes.push(note);
 
-//Save new list
-await chrome.storage.local.set({ notes });
+    //Save new list
+    await chrome.storage.local.set({ notes });
 
-noteWritten.value = "";
-renderNotes(notes);
+    noteWritten.value = "";
+    renderNotes(notes);
 
 });
 
@@ -62,6 +62,31 @@ function renderNotes(notes) {
         notesContainer.appendChild(li);
     });
 }
+
+
+
+
+
+// background listens for clip selection on tab page 
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  // the background script asks for selection when the user hits the shortcut
+  if (msg?.type === 'GET_SELECTION') {
+    try {
+      // safest MVP capture: plain text only (robust across sites/iframes)
+      const sel = window.getSelection();
+      const text = sel ? String(sel).trim() : '';
+      sendResponse({ ok: true, text });
+    } catch (e) {
+      sendResponse({ ok: false, text: '' });
+    }
+  }
+  // asynchronous response not needed here
+  return false;
+});
+
+
+
+
 
 // ce_name.innerHTML = `Hello NAME`;
 // ce_button.innerHTML = `Change name.`;

@@ -4,15 +4,15 @@
     "version": "0.1.0",
     "manifest_version": 3,
     "icons": {
-        "128": "./assets/staticshock_icon.png"
+        "128": "assets/staticshock_icon.png"
     },
     "background": {
-        "service_worker": "./background.js"
+        "service_worker": "background.js"
     },
     "action": {
         "default_popup": "./popup.html",
-        "default_icons": {
-            "128": "./assets/staticshock_icon.png"
+        "default_icon": {
+            "128": "assets/staticshock_icon.png"
         }
     },
     "options_page": "./options.html",
@@ -23,10 +23,20 @@
         "scripting",
         "clipboardWrite",
         "alarms",
-        "sidePanel"
+        "sidePanel",
+        "contextMenus"
     ],
     "side_panel": {
         "default_path": "./popup.html"
+    },
+    "commands": {
+        "clip_selection": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+K",
+                "mac": "Command+Shift+K"
+            },
+            "description": "Create a flashcard from the current selection"
+        }
     },
     "host_permissions": [
         "<all_urls>"
