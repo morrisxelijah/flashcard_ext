@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clip → Cards</title>
+    <link rel="stylesheet" href="styles.css" />
+
+</head>
+
+<body>
+    <header class="bar">
+        <h1>Flash Card Clipper</h1>
+        <nav>
+            <button id="btn-open-options" title="settings">settings</button>
+        </nav>
+    </header>
+    <section> 
+        <h2>Save/Bookmark Page Button</h2>
+    </section>
+
+
+    <section class="quick_add"> 
+        <h2>Quick Add</h2>
+        <textarea id="qa_front" placeholder="front (question / prompt)"></textarea>
+        <textarea id="qa_back" placeholder="back (answer / hint)"></textarea>
+        <input id="qa_tags" placeholder="tags (space-separated)" />
+        <div class="">
+            <button id="qa_create">create card</button>
+        </div>
+    </section>
+
+
+    <section class="due"> 
+        <h2>Review These Today</h2>
+        <div class="toolbar">
+            <button id="btn-refresh">refresh</button>
+            <button id="btn-export_anki"   title="download TSV for Anki">export for anki</button>
+            <button id="btn-copy_quizlet"  title="copy TSV for Quizlet import">copy for quizlet</button>
+        </div>
+        <ul id="due_list" class="card_list"></ul>
+        <template id="card_temp">
+            <li class="card">
+                <div class="front"></div>
+                <details class="answer">
+                    <summary>show answer</summary>
+                    <div class="back"></div>
+                </details>
+                <div class="rate">
+                    <button id="again">try again</button>
+                    <button id="hard">that was hard</button>
+                    <button id="okay">I remembered, mostly</button>
+                    <button id="easy">too easy</button>
+                </div>
+            </li>
+        </template>
+    
+    <section>Notes
+        <h2>Write Your Notes</h2>
+        <ul id="notesContainer"></ul>
+    </section>
+
+    <script src="./popup_script.js"></script>
+</body>
+
+</html>
