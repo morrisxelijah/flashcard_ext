@@ -1,0 +1,30 @@
+{
+    "name": "Flash Card Clipper",
+    "description": "highlight text → create flashcards → review in side panel with spaced repetition; export tsv for anki/quizlet",
+    "version": "0.1.0",
+    "manifest_version": 3,
+    "icons": {
+        "128": "./assets/staticshock_icon.png"
+    },
+    "background": {
+        "service_worker": "./background.js"
+    },
+    "action": {
+        "default_popup": "./popup.html",
+        "default_icons": {
+            "128": "./assets/staticshock_icon.png"
+        }
+    },
+    "options_page": "./options.html",
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "storage",
+        "scripting",
+        "clipboardWrite",
+        "alarms"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ]
+}
