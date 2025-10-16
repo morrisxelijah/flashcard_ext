@@ -13,8 +13,11 @@
 <body>
     <header class="navbar">
         <h1>Flash Card Clipper</h1>
-        <nav>
+        <nav class="toolbar">
             <button id="btn-open-options" title="settings">settings</button>
+            <button id="btn-refresh">refresh</button>
+            <button id="btn-export_anki"   title="download TSV for Anki">export for anki</button>
+            <button id="btn-copy_quizlet"  title="copy TSV for Quizlet import">copy for quizlet</button>
         </nav>
     </header>
   
@@ -32,9 +35,6 @@
     <section class="due"> 
         <h2>Review These Today</h2>
         <div class="toolbar">
-            <button id="btn-refresh">refresh</button>
-            <button id="btn-export_anki"   title="download TSV for Anki">export for anki</button>
-            <button id="btn-copy_quizlet"  title="copy TSV for Quizlet import">copy for quizlet</button>
         </div>
         <ul id="due_list" class="card_list"></ul>
         <template id="card_temp">
