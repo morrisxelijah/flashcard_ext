@@ -10,6 +10,44 @@ chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
     .catch((error) => console.error(error));
   
 
+// -----------------  close popup / side panel  -----------------
+// Enable the built-in behavior whenever the worker starts or the extension (re)installs.
+// This tells Chrome: "when the user clicks the toolbar icon, open my side panel."
+chrome.runtime.onInstalled.addListener(function () {
+    chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(function (err) {
+        // If this fails on an older channel, we still have the explicit click handler below.
+        // console.warn('setPanelBehavior (onInstalled) failed:', err);
+    });
+});
+
+chrome.runtime.onStartup.addListener(function () {
+    chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(function (_err) {});
+});
+
+// Explicit fallback: if a user clicks the toolbar icon, force the panel to open on that tab.
+chrome.action.onClicked.addListener(function (clickedTab) {
+    // Guard: we need a real tab id to target the side panel at.
+    if (!clickedTab || typeof clickedTab.id !== 'number') {
+        return;
+    }
+
+    // 1) Make absolutely sure the panel is enabled for this tab and points at our UI.
+    //    (This also fixes cases where our "close" workaround temporarily disabled it.)
+    chrome.sidePanel.setOptions({
+        tabId: clickedTab.id,
+        enabled: true,
+        path: 'popup.html'   // path is relative to the extension root
+    }).then(function () {
+        // 2) Open the panel for the current window (visible to the user).
+        return chrome.sidePanel.open({ windowId: clickedTab.windowId });
+    }).catch(function (_err) {
+        // If anything fails, we silently ignore. The user can try again;
+        // most failures are transient (e.g., panel not available on channel).
+    });
+});
+
+
+
 
 
 

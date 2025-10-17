@@ -12,7 +12,16 @@
 
 <body>
     <header class="navbar">
-        <h1>Flash Card Clipper</h1>
+        <div class="navbar_top">
+            <!-- <h1>Flash Card Clipper</h1> -->
+            <!-- close button in the visual top-right corner -->
+            <button id="btn-close_panel" class="close_button" aria-label="close panel">
+                &times;    <!-- using the multiplication sign (×) for a larger tap area -->
+            </button>
+            <!-- <div class="title_spacer" aria-hidden="true"></div> balances the grid for true centering -->
+            <h1>Flash Card Clipper</h1>
+        </div>
+        
         <nav class="toolbar">
             <button id="btn-refresh">refresh</button>
             <button id="btn-open-options" title="settings">settings</button>

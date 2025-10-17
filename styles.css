@@ -72,8 +72,7 @@ body,
     z-index: 100;
     background: var(--bg);
     display: flex;
-    flex-direction: column;
-    /* stack title then buttons row */
+    flex-direction: column;    /* stack title then toolbar row */
     align-items: stretch;
     gap: var(--gap);
     padding: 1.2vh 0;
@@ -81,13 +80,32 @@ body,
     margin-bottom: 2vh;
 }
 
-.navbar h1 {
+/* .navbar h1 {
     margin: 0 0 calc(2 * var(--gap)) 0;
     align-self: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+} */
+
+/* top row of the navbar that keeps the title centered and the close button on the right */
+
+
+/* let the h1 work nicely in the grid row (no overflow surprise) */
+.navbar_top h1 {
+    margin: 0;
+    /* remove extra vertical margin in this row */
+    /* justify-self: center; */
+    text-align: center;
+    /* center text inside its grid cell */
+    white-space: nowrap;
+    /* keep the title on a single line */
+    overflow: hidden;
+    /* prevent spillover on tight widths */
+    text-overflow: ellipsis;
+    /* graceful truncation if needed */
 }
+
 
 .navbar nav.toolbar {
     display: flex;
@@ -161,6 +179,34 @@ button:hover {
 #qa_createBtn {
     width: 40%;
 }
+
+
+.close_button {
+    /* inline, right-most grid cell; no position: fixed here */
+    justify-self: end;
+    /* push the button to the far right of its grid cell */
+    /* top: 0; */
+    margin: calc(-1 * var(--bRad)) 0;
+    top: calc(-100 * var(--bRad));
+    bottom: calc(-10 * var(--bRad));
+    min-width: calc(6 * var(--gap));
+    min-height: calc(6 * var(--gap));
+    padding: calc(var(--gap) * 0.75) 1vw;
+    /* fluid interior padding */
+    border: var(--border);
+    border-radius: calc(2 * var(--gap));
+    background: var(--fg);
+    color: var(--secondary);
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.close_button:hover {
+    background: var(--muted);
+}
+
+
 
 /* --------------------  TOOLBAR (empty now, shared style)  -------------------- */
 .toolbar {
