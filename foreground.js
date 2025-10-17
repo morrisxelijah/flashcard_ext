@@ -1,14 +1,5 @@
-// const ce_main_container = document.createElement('DIV');
-// // const ce_name = document.createElement('DIV');
-// const ce_input = document.createElement('INPUT');
-// const ce_button = document.createElement('DIV');
-// ce_main_container.classList.add('ce_main');
-// // ce_name.id = 'ce_name';
-// ce_input.id = 'ce_input';
-// ce_button.id = 'ce_button';
 
-
-
+/** 
 const noteWritten = document.getElement('noteText')
 const saveNoteBtn = document.getElement('Save Note')
 const notesContainer = document.getElement('notesContainer')
@@ -62,58 +53,79 @@ function renderNotes(notes) {
         notesContainer.appendChild(li);
     });
 }
+*/
 
 
 
 
+// content script  -->  answer "what is currently selected on this page?" for the background.
+// keep tiny to avoid breaking sites
 
-// background listens for clip selection on tab page 
-chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
-  // the background script asks for selection when the user hits the shortcut
-  if (msg?.type === 'GET_SELECTION') {
-    try {
-      // safest MVP capture: plain text only (robust across sites/iframes)
-      const sel = window.getSelection();
-      const text = sel ? String(sel).trim() : '';
-      sendResponse({ ok: true, text });
-    } catch (e) {
-      sendResponse({ ok: false, text: '' });
+// Listen for messages from the extension.
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    // ------------- Selection -------------
+    if (message && message.type === 'GET_SELECTION') {
+        var selectionText = '';
+        try {
+            var selectionObject = window.getSelection();
+            selectionText = selectionObject ? String(selectionObject).trim() : '';
+        } catch (e) {
+            selectionText = '';
+        }
+        try { sendResponse({ ok: true, text: selectionText }); } catch (e) {}
+        return true; // we replied
     }
-  }
-  // asynchronous response not needed here
-  return false;
+
+    // ------------- Page Meta -------------
+    if (message && message.type === 'GET_PAGE_META') {
+        // We try to read common meta fields. All are optional; background has fallbacks.
+        var metaTitle = '';
+        var metaDescription = '';
+        var openGraphTitle = '';
+        var openGraphDescription = '';
+        var openGraphSiteName = '';
+
+        try {
+            // Title from the document (often same as tab.title but can differ)
+            metaTitle = document.title ? String(document.title).trim() : '';
+        } catch (e) { metaTitle = ''; }
+
+        try {
+            var descTag = document.querySelector('meta[name="description"]');
+            metaDescription = descTag && descTag.content ? String(descTag.content).trim() : '';
+        } catch (e) { metaDescription = ''; }
+
+        try {
+            var ogTitleTag = document.querySelector('meta[property="og:title"]');
+            openGraphTitle = ogTitleTag && ogTitleTag.content ? String(ogTitleTag.content).trim() : '';
+        } catch (e) { openGraphTitle = ''; }
+
+        try {
+            var ogDescTag = document.querySelector('meta[property="og:description"]');
+            openGraphDescription = ogDescTag && ogDescTag.content ? String(ogDescTag.content).trim() : '';
+        } catch (e) { openGraphDescription = ''; }
+
+        try {
+            var ogSiteTag = document.querySelector('meta[property="og:site_name"]');
+            openGraphSiteName = ogSiteTag && ogSiteTag.content ? String(ogSiteTag.content).trim() : '';
+        } catch (e) { openGraphSiteName = ''; }
+
+        var metaPayload = {
+            metaTitle: metaTitle,
+            metaDescription: metaDescription,
+            ogTitle: openGraphTitle,
+            ogDescription: openGraphDescription,
+            ogSiteName: openGraphSiteName
+        };
+
+        try { sendResponse({ ok: true, data: metaPayload }); } catch (e) {}
+        return true; // we replied
+    }
+
+    return false; // not our message
 });
 
 
 
 
-
-// ce_name.innerHTML = `Hello NAME`;
-// ce_button.innerHTML = `Change name.`;
-
-// ce_main_container.appendChild(ce_name);
-// ce_main_container.appendChild(ce_input);
-// ce_main_container.appendChild(ce_button);
-
-
-// document.querySelector('body').appendChild(ce_main_container);
-
-// chrome.runtime.sendMessage({ 
-//     message: "get_name"
-// }, response => {
-//     if (response.message === 'success') {
-//         ce_name.innerHTML = `Hello ${response.payload}`;
-//     }
-// });
-
-// ce_button.addEventListener('click', () => {
-//     chrome.runtime.sendMessage({ 
-//         message: "change_name",
-//         payload: ce_input.value
-//     }, response => {
-//         if (response.message === 'success') {
-//             ce_name.innerHTML = `Hello ${ce_input.value}`;
-//         }
-//     });
-// });
 

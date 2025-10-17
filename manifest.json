@@ -10,6 +10,7 @@
         "service_worker": "background.js"
     },
     "action": {
+        "default_title": "Open Study Panel",
         "default_icon": {
             "128": "assets/staticshock_icon.png"
         }
@@ -31,13 +32,27 @@
     "commands": {
         "clip_selection": {
             "suggested_key": {
-                "default": "Ctrl+Shift+K",
-                "mac": "Command+Shift+K"
+                "default": "Alt+Shift+K",
+                "mac": "Alt+Shift+K"
             },
-            "description": "Create a flashcard from the current selection"
+            "description": "Populate Quick Add (flashcard) from selection"
+        },
+        "clip_selection_notes": {
+            "suggested_key": {
+                "default": "Alt+Shift+N",
+                "mac": "Alt+Shift+N"
+            },
+            "description": "Populate Notes from selection + page metadata"
         }
     },
     "host_permissions": [
         "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["foreground.js"],
+            "run_at": "document_idle"
+        }
     ]
 }
