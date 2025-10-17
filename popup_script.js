@@ -19,28 +19,6 @@ const els = {
 };
 
 
-// // click handler that works in both contexts (popup and side panel)
-// if (els.btnClosePanel) {
-//     els.btnClosePanel.addEventListener('click', function handleClosePanelClick() {
-//         // 1) first try to close the popup window directly (this works when we are in the popup)
-//         try {
-//             // window.close() will close the extension popup (Chrome allows this)
-//             window.close();
-//         } catch (error) {
-//             // if window.close() is not allowed, we silently continue to the next step
-//         }
-
-//         // 2) also ask background to "close" the side panel context if we are in the side panel
-//         //    note: Chrome does not expose a direct programmatic “close panel” API.
-//         //    We simulate a close by temporarily disabling the panel for this tab, which hides it.
-//         //    Then we re-enable it shortly after so users can open it again from the action button.
-//         try {
-//             chrome.runtime.sendMessage({ type: 'panel:close_request' });
-//         } catch (error) {
-//             // if messaging fails for any reason, we simply do nothing further
-//         }
-//     });
-// }
 
 
 // get inline "×" to close button
