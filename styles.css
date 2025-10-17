@@ -1,10 +1,13 @@
 /* --------------------  THEME  -------------------- */
 :root {
-    --gap: 1vh;
-    --border: 0.5vh solid rgb(41, 114, 126);
+    --gap: min(1vh, 1vw);
+    --border: calc(var(--gap) * 0.75) solid rgb(41, 114, 126);
+    --bRad: calc( 1.5 * max(1vh, 1vw));
     --bg: rgb(49, 171, 193);
     --fg: white;
     --muted: lightgrey;
+    --primary: black;
+    --secondary: rgb(41, 114, 126);
 }
 
 /* --------------------  BASE  -------------------- */
@@ -34,17 +37,24 @@ body {
     /* px for text ok */
 }
 
-h1, h2, h3 {
+h1, h2, h3, .summary-h2 {
     margin: 5vh 0 2vh 0;
+    align-self: center;
+    font-weight: 1000;
+    word-spacing: calc(1.2 * var(--gap));
 }
 
 h1 {
-    font-size: 18px;
+    font-size: 22px;
 }
 
-h2 {
+h2, .summary-h2 {
+    font-size: 18px;
+    /* color: var(--muted); */
+}
+
+h3 {
     font-size: 16px;
-    color: var(--muted);
 }
 
 body,
@@ -58,20 +68,22 @@ body,
 /* h1 on its own line; buttons below on one line, equal widths */
 .navbar {
     position: sticky;
-    top: 0;
+    top: -2vh;
     z-index: 100;
     background: var(--bg);
     display: flex;
     flex-direction: column;
     /* stack title then buttons row */
     align-items: stretch;
-    gap: 1vh;
+    gap: var(--gap);
     padding: 1.2vh 0;
     border-bottom: var(--border);
     margin-bottom: 2vh;
 }
 
 .navbar h1 {
+    margin: 0 0 calc(2 * var(--gap)) 0;
+    align-self: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -79,12 +91,12 @@ body,
 
 .navbar nav.toolbar {
     display: flex;
-    gap: 1vh;
+    gap: var(--gap);
     flex-wrap: nowrap;
     /* keep in one row */
 }
 
-.navbar nav.toolbar>button {
+.navbar nav.toolbar > button {
     flex: 1 1 0;
     /* equal widths */
     min-width: 0;
@@ -93,15 +105,33 @@ body,
 
 /* --------------------  FORM INPUTS  -------------------- */
 .quick_add textarea,
-.quick_add input {
+.quick_add input, 
+.notes textarea,
+.notes input {
     width: 100%;
     max-width: 100%;
-    margin-bottom: 1vh;
-    padding: 1vh;
+    margin-bottom: var(--gap);
+    padding: var(--gap);
     border: var(--border);
-    border-radius: 0.5vh;
+    border-radius: var(--bRad);
     background: var(--fg);
-    color: #111;
+    color: var(--secondary);
+    resize: vertical;
+}
+
+.quick_add h3, .summary-h2 {
+    margin: var(--bRad) 0 calc(2 * var(--gap)) 0;
+}
+
+textarea {
+    min-height: 50px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    text-align: center;
+    /* align-self: center; */
+    line-height: calc(2.25 * var(--bRad));
 }
 
 /* --------------------  GENERIC BUTTONS  -------------------- */
@@ -109,12 +139,14 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1vh 1vw;
+    justify-self: center;
+    padding: var(--gap) 1vw;
     /* fluid size */
     border: var(--border);
-    border-radius: 0.6vh;
+    border-radius: var(--bRad);
     background: var(--fg);
-    color: #111;
+    color: var(--secondary);
+    font-weight: bold;
     cursor: pointer;
     white-space: nowrap;
     /* keep label on one line */
@@ -126,14 +158,18 @@ button:hover {
     background: var(--muted);
 }
 
+#qa_createBtn {
+    width: 40%;
+}
+
 /* --------------------  TOOLBAR (empty now, shared style)  -------------------- */
 .toolbar {
     display: flex;
-    gap: 1vh;
+    gap: var(--gap);
     flex-wrap: nowrap;
 }
 
-.toolbar>* {
+.toolbar > * {
     flex: 1 1 0;
     min-width: 0;
 }
@@ -142,12 +178,12 @@ button:hover {
 /* all four rating buttons: one line, equal widths */
 .rate {
     display: flex;
-    gap: 1vh;
-    margin-top: 1vh;
+    gap: var(--gap);
+    margin-top: var(--gap);
     flex-wrap: nowrap;
 }
 
-.rate>button {
+.rate > button {
     flex: 1 1 0;
     min-width: 0;
 }
@@ -158,7 +194,7 @@ button:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     /* two equal columns for buttons */
-    gap: 1vh;
+    gap: var(--gap);
 }
 
 #noteText,
@@ -195,15 +231,15 @@ button:hover {
 .card {
     background: rgba(255, 255, 255, 0.08);
     border: var(--border);
-    border-radius: 0.8vh;
+    border-radius: var(--bRad);
     padding: 1.2vh 1vw;
 }
 
 .front {
     font-weight: 600;
-    margin-bottom: 0.6vh;
+    margin-bottom: var(--gap);
 }
 
 .answer {
-    margin: 0.6vh 0;
+    margin: var(--gap) 0;
 }
